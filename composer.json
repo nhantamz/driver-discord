@@ -1,5 +1,5 @@
 {
-    "name": "botman/driver-discord",
+    "name": "nhantamz/driver-discord",
     "license": "MIT",
     "description": "Discord driver for BotMan",
     "keywords": [
@@ -7,7 +7,7 @@
         "BotMan",
         "Discord"
     ],
-    "homepage": "http://github.com/botman/driver-discord",
+    "homepage": "http://github.com/nhantamz/driver-discord",
     "authors": [{
         "name": "Marcel Pociot",
         "email": "m.pociot@gmail.com"
