@@ -52,6 +52,7 @@ class DiscordDriver implements DriverInterface
      */
     public function connected()
     {
+        $this->bot_id = $this->client->user->tag;
     }
 
     /**
@@ -88,7 +89,7 @@ class DiscordDriver implements DriverInterface
      */
     public function getConversationAnswer(IncomingMessage $message)
     {
-        return Answer::create($this->message->content)->setMessage($message);
+        return Answer::create($this->message->content ?? null)->setMessage($message);
     }
 
     /**
@@ -98,9 +99,9 @@ class DiscordDriver implements DriverInterface
      */
     public function getMessages()
     {
-        $messageText = $this->message->content;
-        $user_id = $this->message->author->id;
-        $channel_id = $this->message->channel->id;
+        $messageText = $this->message->content ?? null;
+        $user_id = $this->message->author->id ?? null;
+        $channel_id = $this->message->channel->id ?? null;
 
         $message = new IncomingMessage($messageText, $user_id, $channel_id, $this->message);
         $message->setIsFromBot($this->isBot());
@@ -113,7 +114,7 @@ class DiscordDriver implements DriverInterface
      */
     protected function isBot()
     {
-        return false;
+        return $this->message->author->bot ?? false;;
     }
 
     /**
@@ -156,6 +157,10 @@ class DiscordDriver implements DriverInterface
      */
     public function sendPayload($payload)
     {
+        if (empty($this->message)) {
+            return null;
+        }
+
         return $this->message->channel->sendMessage($payload['message'], false, $payload['embed']);
     }
 
